@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);  // Create the scanner outside the loop
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             System.out.println("Elpriser");
@@ -18,7 +18,7 @@ public class Main {
 
             String input = scanner.nextLine().toLowerCase();
 
-            if (input.equals( "e")) {
+            if (input.equals("e")) {
                 System.out.println("Avsluta");
                 break;
             }
