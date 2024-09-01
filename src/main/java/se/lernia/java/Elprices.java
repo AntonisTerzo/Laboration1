@@ -2,6 +2,8 @@ package se.lernia.java;
 
 import java.util.Scanner;
 
+import static java.lang.Integer.MAX_VALUE;
+
 public class Elprices {
     private final int[] prices;
     private final Scanner sc;
@@ -34,6 +36,9 @@ public class Elprices {
             }
         }
         System.out.println("Inmatning av elpriser klar, priser är registrerad.");
+
+        System.out.println("Tryck enter för att fortsätta.");
+        sc.nextLine();
     }
 
     public void findMinMaxAverage() {
@@ -60,6 +65,9 @@ public class Elprices {
         System.out.printf("Lowest price: %d öre/kWh (Hour %02d-%02d)%n", minPrice, minHour, (minHour + 1) % 24);
         System.out.printf("Highest price: %d öre/kWh (Hour %02d-%02d)%n", maxPrice, maxHour, (maxHour + 1) % 24);
         System.out.printf("Average price: %.2f öre/kWh%n", averagePrice);
+
+        System.out.println("Tryck enter för att fortsätta.");
+        sc.nextLine();
     }
 
     public void sortPrices() {
@@ -88,5 +96,40 @@ public class Elprices {
             int hour = priceWithHour[1];
             System.out.printf("Timme %02d-%02d: %d öre/kWh%n", hour, (hour + 1) % 24, price);
         }
+
+        System.out.println("Tryck enter för att fortsätta.");
+        sc.nextLine();
+    }
+
+    public void bestChargingTime() {
+        int windowSize = 4;
+        int minSum = MAX_VALUE;
+        int minStartHour = 0;
+        int totalSum = 0;
+        double averagePrice = 0;
+
+        // Calculate the total price of the first window
+        for (int i = 0; i < windowSize; i++) {
+            totalSum += prices[i];
+        }
+        minSum = totalSum;
+
+        // Slide the window across the array
+        for (int i = 1; i < prices.length; i++) {
+            totalSum = totalSum - prices[i - 1] + prices[(i + windowSize - 1) % prices.length];
+            if (totalSum < minSum) {
+                minSum = totalSum;
+                minStartHour = i;
+            }
+        }
+
+        averagePrice = (double) minSum / windowSize;
+        System.out.println("Bästa laddningstid (4 timmar):");
+        System.out.printf("Starta laddning vid timme: %02d till %02d%n", minStartHour, (minStartHour + windowSize) % 24);
+        System.out.printf("Totalpris för 4 timmar: %d öre%n", minSum);
+        System.out.printf("Medelpris för 4 timmar: %.2f öre/kWh%n", averagePrice);
+
+        System.out.println("Tryck enter för att fortsätta.");
+        sc.nextLine();
     }
 }

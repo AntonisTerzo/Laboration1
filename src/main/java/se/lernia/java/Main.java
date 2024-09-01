@@ -40,7 +40,7 @@ public class Main {
                         elprices.sortPrices();
                         break;
                     case 4:
-                        System.out.println("Bästa Laddningstid (4h)");
+                        elprices.bestChargingTime();
                         break;
                     default:
                         System.out.println("Ogiltigt alternativ");
