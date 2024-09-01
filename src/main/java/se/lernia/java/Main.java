@@ -3,16 +3,12 @@ package se.lernia.java;
 import java.util.Scanner;
 
 public class Main {
-    public static Scanner sc = new Scanner(System.in);
-    public static Elprices elprices;
 
     public static void main(String[] args) {
-        int initialPrice = 0;
-        elprices = new Elprices(initialPrice, sc);
-        menu();
-    }
+        Scanner sc = new Scanner(System.in);
+        int [] initialPrice = new int[24];
+        Elprices elprices = new Elprices(initialPrice, sc);
 
-    public static void menu() {
         while (true) {
             System.out.println("Elpriser");
             System.out.println("========");
@@ -41,7 +37,7 @@ public class Main {
                         elprices.findMinMaxAverage();
                         break;
                     case 3:
-                        System.out.println("Sortera");
+                        elprices.sortPrices();
                         break;
                     case 4:
                         System.out.println("Bästa Laddningstid (4h)");

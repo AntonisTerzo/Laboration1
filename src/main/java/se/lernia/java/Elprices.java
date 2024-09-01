@@ -6,11 +6,8 @@ public class Elprices {
     private final int[] prices;
     private final Scanner sc;
 //Creating a constructor
-    public Elprices(int initialPrice, Scanner sc) {
-        this.prices = new int[24];
-        for (int i = 0; i < 24; i++) {
-            this.prices[i] = initialPrice;
-        }
+    public Elprices(int[] prices, Scanner sc) {
+        this.prices = prices;
         this.sc = sc;
     }
 
@@ -40,11 +37,6 @@ public class Elprices {
     }
 
     public void findMinMaxAverage() {
-        if (prices.length != 24) {
-            System.out.println("Inga prisuppgifter tillgängliga. Ange priser först.");
-            return;
-        }
-
         int minPrice = prices[0];
         int maxPrice = prices[0];
         int minHour = 0;
@@ -69,8 +61,32 @@ public class Elprices {
         System.out.printf("Highest price: %d öre/kWh (Hour %02d-%02d)%n", maxPrice, maxHour, (maxHour + 1) % 24);
         System.out.printf("Average price: %.2f öre/kWh%n", averagePrice);
     }
-    public int[] getPrices() {
 
-        return prices;
+    public void sortPrices() {
+        int[][] priceWithHours = new int[24][2];
+        for (int i = 0; i < 24; i++) {
+            priceWithHours[i][0] = prices[i]; // Price
+            priceWithHours[i][1] = i;         // Hour
+        }
+
+        // Sort the 2D array by the price
+        for (int i = 0; i < priceWithHours.length - 1; i++) {
+            for (int j = i + 1; j < priceWithHours.length; j++) {
+                if (priceWithHours[i][0] > priceWithHours[j][0]) {
+                    // Swap rows
+                    int[] temp = priceWithHours[i];
+                    priceWithHours[i] = priceWithHours[j];
+                    priceWithHours[j] = temp;
+                }
+            }
+        }
+
+        // Print sorted prices with their hours
+        System.out.println("Sorterade priser:");
+        for (int[] priceWithHour : priceWithHours) {
+            int price = priceWithHour[0];
+            int hour = priceWithHour[1];
+            System.out.printf("Timme %02d-%02d: %d öre/kWh%n", hour, (hour + 1) % 24, price);
+        }
     }
 }
