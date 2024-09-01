@@ -7,7 +7,8 @@ public class Main {
     public static Elprices elprices;
 
     public static void main(String[] args) {
-        elprices = new Elprices(sc);
+        int initialPrice = 0;
+        elprices = new Elprices(initialPrice, sc);
         menu();
     }
 
@@ -37,7 +38,7 @@ public class Main {
                         elprices.manualInput();
                         break;
                     case 2:
-                        System.out.println("Min, Max och Medel");
+                        elprices.findMinMaxAverage();
                         break;
                     case 3:
                         System.out.println("Sortera");
