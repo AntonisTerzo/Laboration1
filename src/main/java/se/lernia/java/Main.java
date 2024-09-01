@@ -1,13 +1,15 @@
 package se.lernia.java;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int [] initialPrice = new int[24];
-        Elprices elprices = new Elprices(initialPrice, sc);
+        List<Integer> prices = new ArrayList<>(24);
+        Elprices elprices = new Elprices(prices, sc);
 
         while (true) {
             System.out.println("Elpriser");

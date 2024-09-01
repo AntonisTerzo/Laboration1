@@ -1,12 +1,16 @@
 package se.lernia.java;
 
+
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Elprices {
-    private final int[] prices;
+    private final List<Integer> prices;
     private final Scanner sc;
-//Creating a constructor
-    public Elprices(int[] prices, Scanner sc) {
+
+    public Elprices(List<Integer> prices, Scanner sc) {
         this.prices = prices;
         this.sc = sc;
     }
@@ -14,6 +18,8 @@ public class Elprices {
     public void manualInput() {
         System.out.println("Inmatning av elpriser");
         System.out.println("=====================");
+
+        prices.clear();
 
         for (int i = 0; i < 24; i++) {
             while (true) {
@@ -25,7 +31,7 @@ public class Elprices {
                     if (price < 0) {
                         System.out.println("Priset kan inte vara negativt. Försök igen.");
                     } else {
-                        prices[i] = price;
+                        prices.add(price);
                         break;
                     }
                 } catch (NumberFormatException e) {
@@ -40,14 +46,21 @@ public class Elprices {
     }
 
     public void findMinMaxAverage() {
-        int minPrice = prices[0];
-        int maxPrice = prices[0];
+        if (prices.isEmpty()) {
+            System.out.println("Inga priser har registrerats ännu.");
+            return;
+        }
+
+        int minPrice = prices.getFirst();
+        int maxPrice = prices.getFirst();
         int minHour = 0;
         int maxHour = 0;
         long sum = 0;
-        for (int i = 0; i < prices.length; i++) {
-            int price = prices[i];
+
+        for (int i = 0; i < prices.size(); i++) {
+            int price = prices.get(i);
             sum += price;
+
             if (price < minPrice) {
                 minPrice = price;
                 minHour = i;
@@ -57,7 +70,9 @@ public class Elprices {
                 maxHour = i;
             }
         }
-        double averagePrice = (double) sum / prices.length;
+
+        double averagePrice = (double) sum / prices.size();
+
         System.out.println("Pris Analys");
         System.out.println("=====================");
         System.out.printf("Lowest price: %d öre/kWh (Hour %02d-%02d)%n", minPrice, minHour, (minHour + 1) % 24);
@@ -69,30 +84,20 @@ public class Elprices {
     }
 
     public void sortPrices() {
-        int[][] priceWithHours = new int[24][2];
-        for (int i = 0; i < 24; i++) {
-            priceWithHours[i][0] = prices[i]; // Price
-            priceWithHours[i][1] = i;         // Hour
+        if (prices.isEmpty()) {
+            System.out.println("Inga priser har registrerats ännu.");
+            return;
         }
 
-        // Sort the 2D array by the price
-        for (int i = 0; i < priceWithHours.length - 1; i++) {
-            for (int j = i + 1; j < priceWithHours.length; j++) {
-                if (priceWithHours[i][0] > priceWithHours[j][0]) {
-                    // Swap rows
-                    int[] temp = priceWithHours[i];
-                    priceWithHours[i] = priceWithHours[j];
-                    priceWithHours[j] = temp;
-                }
-            }
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < prices.size(); i++) {
+            indices.add(i);
         }
-
-        // Print sorted prices with their hours
-        System.out.println("Sorterade priser:");
-        for (int[] priceWithHour : priceWithHours) {
-            int price = priceWithHour[0];
-            int hour = priceWithHour[1];
-            System.out.printf("Timme %02d-%02d: %d öre/kWh%n", hour, (hour + 1) % 24, price);
+        // Sort the indices based on the prices
+        indices.sort((a, b) -> Integer.compare(prices.get(a), prices.get(b)));
+        System.out.println("Sorterade priser: ");
+        for (int index : indices) {
+            System.out.printf("Timme %02d-%02d: %d öre/kWh%n", index, (index + 1) % 24, prices.get(index));
         }
 
         System.out.println("Tryck enter för att fortsätta.");
@@ -100,28 +105,27 @@ public class Elprices {
     }
 
     public void bestChargingTime() {
-        int windowSize = 4;
-        int minSum;
-        int minStartHour = 0;
-        int totalSum = 0;
-        double averagePrice;
-
-        // Calculate the total price of the first window
-        for (int i = 0; i < windowSize; i++) {
-            totalSum += prices[i];
+        if (prices.isEmpty()) {
+            System.out.println("Inga priser har registrerats ännu.");
+            return;
         }
-        minSum = totalSum;
 
-        // Slide the window across the array
-        for (int i = 1; i < prices.length; i++) {
-            totalSum = totalSum - prices[i - 1] + prices[(i + windowSize - 1) % prices.length];
-            if (totalSum < minSum) {
-                minSum = totalSum;
+        int windowSize = 4;
+        int minSum = Integer.MAX_VALUE;
+        int minStartHour = 0;
+
+        for (int i = 0; i < prices.size(); i++) {
+            int sum = 0;
+            for (int j = 0; j < windowSize; j++) {
+                sum += prices.get((i + j) % prices.size());
+            }
+            if (sum < minSum) {
+                minSum = sum;
                 minStartHour = i;
             }
         }
 
-        averagePrice = (double) minSum / windowSize;
+        double averagePrice = (double) minSum / windowSize;
         System.out.println("Bästa laddningstid (4 timmar):");
         System.out.printf("Starta laddning vid timme: %02d till %02d%n", minStartHour, (minStartHour + windowSize) % 24);
         System.out.printf("Totalpris för 4 timmar: %d öre%n", minSum);
