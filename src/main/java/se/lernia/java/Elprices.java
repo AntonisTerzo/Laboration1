@@ -2,8 +2,6 @@ package se.lernia.java;
 
 import java.util.Scanner;
 
-import static java.lang.Integer.MAX_VALUE;
-
 public class Elprices {
     private final int[] prices;
     private final Scanner sc;
@@ -103,10 +101,10 @@ public class Elprices {
 
     public void bestChargingTime() {
         int windowSize = 4;
-        int minSum = MAX_VALUE;
+        int minSum;
         int minStartHour = 0;
         int totalSum = 0;
-        double averagePrice = 0;
+        double averagePrice;
 
         // Calculate the total price of the first window
         for (int i = 0; i < windowSize; i++) {
