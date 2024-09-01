@@ -3,24 +3,26 @@ package se.lernia.java;
 import java.util.Scanner;
 
 public class Main {
+    public static Scanner sc = new Scanner(System.in);
+    public static Elprices elprices;
+
     public static void main(String[] args) {
+        elprices = new Elprices(sc);
         menu();
     }
 
     public static void menu() {
-        Scanner scanner = new Scanner(System.in);
-
         while (true) {
             System.out.println("Elpriser");
             System.out.println("========");
-            System.out.println("Välj ett av följande alternativ:");
             System.out.println("1. Inmatning");
             System.out.println("2. Min, Max och Medel");
             System.out.println("3. Sortera");
             System.out.println("4. Bästa Laddningstid (4h)");
             System.out.println("e. Avsluta");
+            System.out.println("Välj ett av alternativen: ");
 
-            String input = scanner.nextLine().toLowerCase();
+            String input = sc.nextLine().toLowerCase();
 
             if (input.equals("e")) {
                 System.out.println("Avsluta");
@@ -32,7 +34,7 @@ public class Main {
 
                 switch (val) {
                     case 1:
-                        System.out.println("Inmatning");
+                        elprices.manualInput();
                         break;
                     case 2:
                         System.out.println("Min, Max och Medel");
@@ -52,6 +54,6 @@ public class Main {
             }
         }
 
-        scanner.close();
+        sc.close();
     }
 }
