@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Integer> prices = new ArrayList<>(24);
+        List<Integer> prices = new ArrayList<>();
         Elprices elprices = new Elprices(prices, sc);
 
         while (true) {

@@ -1,10 +1,8 @@
 package se.lernia.java;
 
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 
 public class Elprices {
     private final List<Integer> prices;
