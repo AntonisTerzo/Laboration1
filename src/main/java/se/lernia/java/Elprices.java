@@ -1,5 +1,8 @@
 package se.lernia.java;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,6 +18,7 @@ public class Elprices {
 
     public void manualInput() {
         System.out.println("Inmatning av elpriser");
+        System.out.println("Ange priset i hela ören (1.50kr anges således som 150)");
         System.out.println("=====================");
 
         prices.clear();
@@ -137,5 +141,34 @@ public class Elprices {
 
         System.out.println("Tryck enter för att fortsätta.");
         sc.nextLine();
+    }
+
+    public void readPricesFromCsv() {
+        String fileName = "src/main/java/se/lernia/java/elpriser.csv";
+        prices.clear();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 1) {
+                    try {
+                        // Parse the price (second part) and convert from SEK/kWh to öre/kWh
+                        double priceInSek = Double.parseDouble(tokens[1]);
+                        int priceInOre = (int) Math.round(priceInSek * 10);
+                        prices.add(priceInOre);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Ignorerar ogiltig pris.");
+                    }
+                }
+            }
+            System.out.println("Priser har lästs in. " + prices );
+        } catch (IOException e) {
+            System.out.println("Ett fel uppstod vid läsning av filen: " + e.getMessage());
+        }
+        System.out.println("Tryck enter för att fortsätta.");
+        sc.nextLine();
+
     }
 }

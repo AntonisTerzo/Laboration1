@@ -12,12 +12,13 @@ public class Main {
         Elprices elprices = new Elprices(prices, sc);
 
         while (true) {
-            System.out.println("Elpriser");
+            System.out.println("Välkomen till Elpriser, priserna anges i hela ören (1.50kr anges således som 150).");
             System.out.println("========");
-            System.out.println("1. Inmatning");
-            System.out.println("2. Min, Max och Medel");
-            System.out.println("3. Sortera");
+            System.out.println("1. Manual Inmatning av priser");
+            System.out.println("2. Min, Max och Medel priser");
+            System.out.println("3. Sortera priser efter billigast till dyrast");
             System.out.println("4. Bästa Laddningstid (4h)");
+            System.out.println("5. Läs in priser från CSV fil");
             System.out.println("e. Avsluta");
             System.out.println("Välj ett av alternativen: ");
 
@@ -43,6 +44,8 @@ public class Main {
                         break;
                     case 4:
                         elprices.bestChargingTime();
+                        break;
+                    case 5: elprices.readPricesFromCsv();
                         break;
                     default:
                         System.out.println("Ogiltigt alternativ");
