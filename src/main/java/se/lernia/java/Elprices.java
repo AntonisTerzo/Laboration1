@@ -46,6 +46,8 @@ public class Elprices {
     public void findMinMaxAverage() {
         if (prices.isEmpty()) {
             System.out.println("Inga priser har registrerats ännu.");
+            System.out.println("Tryck enter för att fortsätta.");
+            sc.nextLine();
             return;
         }
 
@@ -84,6 +86,8 @@ public class Elprices {
     public void sortPrices() {
         if (prices.isEmpty()) {
             System.out.println("Inga priser har registrerats ännu.");
+            System.out.println("Tryck enter för att fortsätta.");
+            sc.nextLine();
             return;
         }
 
@@ -105,6 +109,8 @@ public class Elprices {
     public void bestChargingTime() {
         if (prices.isEmpty()) {
             System.out.println("Inga priser har registrerats ännu.");
+            System.out.println("Tryck enter för att fortsätta.");
+            sc.nextLine();
             return;
         }
 
