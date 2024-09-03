@@ -156,7 +156,7 @@ public class Elprices {
                     try {
                         // Parse the price (second part) and convert from SEK/kWh to öre/kWh
                         double priceInSek = Double.parseDouble(tokens[1]);
-                        int priceInOre = (int) Math.round(priceInSek * 10);
+                        int priceInOre = (int) Math.round(priceInSek * 100);
                         prices.add(priceInOre);
                     } catch (NumberFormatException e) {
                         System.out.println("Ignorerar ogiltig pris.");
