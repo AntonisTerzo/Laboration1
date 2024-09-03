@@ -147,8 +147,7 @@ public class Elprices {
         String fileName = "src/main/java/se/lernia/java/elpriser.csv";
         prices.clear();
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
             String line;
             while ((line = br.readLine()) != null) {
                 String[] tokens = line.split(",");
@@ -163,12 +162,11 @@ public class Elprices {
                     }
                 }
             }
-            System.out.println("Priser har lästs in. " + prices );
+            System.out.println("Priser har lästs in. \n" + prices );
         } catch (IOException e) {
             System.out.println("Ett fel uppstod vid läsning av filen: " + e.getMessage());
         }
         System.out.println("Tryck enter för att fortsätta.");
         sc.nextLine();
-
     }
 }
