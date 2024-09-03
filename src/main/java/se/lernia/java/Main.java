@@ -45,7 +45,8 @@ public class Main {
                     case 4:
                         elprices.bestChargingTime();
                         break;
-                    case 5: elprices.readPricesFromCsv();
+                    case 5: 
+                        elprices.readPricesFromCsv();
                         break;
                     default:
                         System.out.println("Ogiltigt alternativ");
